@@ -38,7 +38,7 @@ NEWFILEUID:NONE
                         <UNIQUEID>AAPL</UNIQUEID>
                         <UNIQUEIDTYPE>TICKER</UNIQUEIDTYPE>
                     </SECID>
-                    <SECNAME>AAPL</SECNAME>
+                    <SECNAME>Apple Inc.</SECNAME>
                     <TICKER>AAPL</TICKER>
                 </SECINFO>
             </STOCKINFO>
@@ -48,7 +48,7 @@ NEWFILEUID:NONE
                         <UNIQUEID>MSFT</UNIQUEID>
                         <UNIQUEIDTYPE>TICKER</UNIQUEIDTYPE>
                     </SECID>
-                    <SECNAME>MSFT</SECNAME>
+                    <SECNAME>Microsoft Corp.</SECNAME>
                     <TICKER>MSFT</TICKER>
                 </SECINFO>
             </STOCKINFO>
@@ -154,6 +154,7 @@ class OfxInvestLinesWriterTest(TestCase):
             "BUYSTOCK",
             "BUY",
             "AAPL",
+            "Apple Inc.",
             Decimal("-416.08"),
         )
         invest_line.units = Decimal("3")
@@ -169,6 +170,7 @@ class OfxInvestLinesWriterTest(TestCase):
             "SELLSTOCK",
             "SELL",
             "MSFT",
+            "Microsoft Corp.",
             Decimal("1127.87"),
         )
         invest_line.units = Decimal("-5")
@@ -184,6 +186,7 @@ class OfxInvestLinesWriterTest(TestCase):
             "INCOME",
             "DIV",
             "MSFT",
+            "Microsoft Corp.",
             Decimal("0.79"),
         )
         invest_line.fees = Decimal("0.5")

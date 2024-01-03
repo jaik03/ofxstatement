@@ -219,6 +219,8 @@ class InvestStatementLine(Printable):
 
     # ID or ticker of underlying security
     security_id: Optional[str]
+    # Name of underlying security
+    security_name: Optional[str]
     # Transaction type, must be one of INVEST_TRANSACTION_TYPES
     trntype: Optional[str]
     # More detailed information about transaction, must be one of INVEST_TRANSACTION_TYPES_DETAILED
@@ -238,6 +240,7 @@ class InvestStatementLine(Printable):
         trntype: Optional[str] = None,
         trntype_detailed: Optional[str] = None,
         security_id: Optional[str] = None,
+        security_name: Optional[str] = None,
         amount: Optional[D] = None,
     ) -> None:
         self.id = id
@@ -246,11 +249,12 @@ class InvestStatementLine(Printable):
         self.trntype = trntype
         self.trntype_detailed = trntype_detailed
         self.security_id = security_id
+        self.security_name = security_name
         self.amount = amount
 
     def __str__(self) -> str:
         return """
-            ID: %s, date: %s, trntype: %s, trntype_detailed: %s, security_id: %s, units: %s, unit_price: %s, amount: %s, fees: %s
+            ID: %s, date: %s, trntype: %s, trntype_detailed: %s, security_id: %s, security_name: %s, units: %s, unit_price: %s, amount: %s, fees: %s
             memo: %s
             """ % (
             self.id,
@@ -258,6 +262,7 @@ class InvestStatementLine(Printable):
             self.trntype,
             self.trntype_detailed,
             self.security_id,
+            self.security_name,
             self.units,
             self.unit_price,
             self.amount,
@@ -283,6 +288,7 @@ class InvestStatementLine(Printable):
 
         assert self.id
         assert self.security_id
+        assert self.security_name
         assert self.amount
 
         assert self.trntype == "INCOME" or self.units

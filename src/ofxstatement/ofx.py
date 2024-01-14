@@ -152,17 +152,16 @@ class OfxWriter(object):
         tb.start("SECLIST", {})
 
         # get unqiue tickers
-        for security_id in dict.fromkeys(
-            map(lambda x: x.security_id, self.statement.invest_lines)
-        ):
+        sec_tuples: list[Tuple] = list(set(map(returnSecurityTuple, self.statement.invest_lines)))
+        for sec_id, sec_name in sec_tuples:
             tb.start("STOCKINFO", {})
             tb.start("SECINFO", {})
             tb.start("SECID", {})
-            self.buildText("UNIQUEID", security_id)
+            self.buildText("UNIQUEID", sec_id)
             self.buildText("UNIQUEIDTYPE", "TICKER")
             tb.end("SECID")
-            self.buildText("SECNAME", security_id)
-            self.buildText("TICKER", security_id)
+            self.buildText("SECNAME", sec_name)
+            self.buildText("TICKER", sec_id)
             tb.end("SECINFO")
             tb.end("STOCKINFO")
 
@@ -323,3 +322,9 @@ class OfxWriter(object):
                 precision = self.default_float_precision
 
             self.buildText(tag, "{0:.{precision}f}".format(amount, precision=precision))
+
+def returnSecurityTuple(invest_line: InvestStatementLine)-> tuple[str, str]:
+    if invest_line.security_name:
+        return invest_line.security_id, invest_line.security_name
+    else:
+        return invest_line.security_id, invest_line.security_id

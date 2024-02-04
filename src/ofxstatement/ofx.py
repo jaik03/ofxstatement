@@ -152,7 +152,9 @@ class OfxWriter(object):
         tb.start("SECLIST", {})
 
         # get unqiue tickers
-        sec_tuples: list[Tuple] = list(set(map(returnSecurityTuple, self.statement.invest_lines)))
+        sec_tuples: list[Tuple] = list(
+            set(map(returnSecurityTuple, self.statement.invest_lines))
+        )
         for sec_id, sec_name in sec_tuples:
             tb.start("STOCKINFO", {})
             tb.start("SECINFO", {})
@@ -323,7 +325,8 @@ class OfxWriter(object):
 
             self.buildText(tag, "{0:.{precision}f}".format(amount, precision=precision))
 
-def returnSecurityTuple(invest_line: InvestStatementLine)-> tuple[str, str]:
+
+def returnSecurityTuple(invest_line: InvestStatementLine) -> tuple[str, str]:
     if invest_line.security_name:
         return invest_line.security_id, invest_line.security_name
     else:

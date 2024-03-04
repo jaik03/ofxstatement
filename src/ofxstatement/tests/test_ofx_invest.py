@@ -152,6 +152,16 @@ NEWFILEUID:NONE
                         <UNITPRICE>225.63000</UNITPRICE>
                         <UNITS>4.00000</UNITS>
                     </TRANSFER>
+                    <INVBANKTRAN>
+                        <STMTTRN>
+                            <TRNTYPE>INT</TRNTYPE>
+                            <DTPOSTED>20210102</DTPOSTED>
+                            <TRNAMT>0.45</TRNAMT>
+                            <FITID>6</FITID>
+                            <MEMO>Bank Interest</MEMO>
+                        </STMTTRN>
+                        <SUBACCTFUND>OTHER</SUBACCTFUND>
+                    </INVBANKTRAN>
                 </INVTRANLIST>
             </INVSTMTRS>
         </INVSTMTTRNRS>
@@ -228,6 +238,13 @@ class OfxInvestLinesWriterTest(TestCase):
         invest_line.security_id = "MSFT"
         invest_line.units = Decimal("4")
         invest_line.unit_price = Decimal("225.63")
+        invest_line.assert_valid()
+        statement.invest_lines.append(invest_line)
+
+        invest_line = InvestStatementLine(
+            "6", datetime(2021, 1, 2), "Bank Interest", "INVBANKTRAN", "INT"
+        )
+        invest_line.amount = Decimal("0.45")
         invest_line.assert_valid()
         statement.invest_lines.append(invest_line)
 
